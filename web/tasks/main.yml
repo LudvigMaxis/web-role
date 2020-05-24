@@ -1,0 +1,22 @@
+---
+
+- name: Actualizar Repositorios y Instalar Apache2
+  apt: name=apache2 state=latest update_cache=yes
+
+
+- name: Directorio Web
+  file: path={{ root }} state=directory owner=www-data group=www-data
+
+- name: Primera Página
+  copy: src=index.html dest={{ root }}/index.html owner=www-data group=www-data
+
+- name: Archvios de Configuración apache2.conf
+  template: src=apache2.conf.tpl dest=/etc/apache2/apache2.conf
+
+- name: Archivos de Configuración ports.conf
+  template: src=ports.conf.tpl dest=/etc/apache2/ports.conf
+
+- name: Archivos de Configuración 000-default.conf
+  template: src=000-default.conf.tpl dest=/etc/apache2/sites-enabled/000-default.conf
+
+- include: web/tasks/php.yml

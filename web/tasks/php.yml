@@ -1,0 +1,5 @@
+---
+
+- name: Instalar PHP
+  apt: update_cache=yes name={{ item }} state=latest
+  loop: [ ' php', 'libapache2-mod-php' ]
